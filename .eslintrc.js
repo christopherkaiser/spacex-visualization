@@ -5,4 +5,7 @@ module.exports = {
         node: true,
         jest: true,
       },
+      rules: {
+        'linebreak-style': 0,
+      }
 };
