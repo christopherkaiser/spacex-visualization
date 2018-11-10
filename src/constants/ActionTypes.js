@@ -1,2 +1,2 @@
 export const RECEIVE_LAUNCHES = 'RECEIVE_LAUNCHES';
-export const temp = 'sdf';
+export const UPDATE_SELECTION = 'UPDATE_SELECTION';

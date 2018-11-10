@@ -12,4 +12,9 @@ export const getLaunches = () => (dispatch) => {
   });
 };
 
-export const temp = () => {};
+export const updateSelection = selection => (dispatch) => {
+  dispatch({
+    type: types.UPDATE_SELECTION,
+    selection,
+  });
+};

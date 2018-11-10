@@ -30,3 +30,22 @@
 
 //   return { labels, dataSets };
 // };
+
+
+
+// const total = labels.map(label => launches.reduce(
+//     (acc, current) => acc + (current.launch_year === label ? 1 : 0),
+//     0,
+//   ));
+
+//   const success = labels.map(label => launches.reduce(
+//     (acc, current) => acc + (current.launch_year === label && current.launch_success ? 1 : 0),
+//     0,
+//   ));
+
+//   const failed = labels.map(label => launches.reduce(
+//     (acc, current) => acc + (current.launch_year === label && current.launch_success === false
+//       ? 1
+//       : 0),
+//     0,
+//   ));
