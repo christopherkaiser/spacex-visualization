@@ -51,6 +51,22 @@ class SimpleMenu extends React.Component {
           >
             Rocket
           </MenuItem>
+          <MenuItem
+            onClick={() => {
+              this.handleClose();
+              updateSelection('launch_site');
+            }}
+          >
+            Launch Site
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              this.handleClose();
+              updateSelection('cores_land_success');
+            }}
+          >
+            Successful Core Landings
+          </MenuItem>
         </Menu>
       </div>
     );

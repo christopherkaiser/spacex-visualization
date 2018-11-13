@@ -31,8 +31,6 @@
 //   return { labels, dataSets };
 // };
 
-
-
 // const total = labels.map(label => launches.reduce(
 //     (acc, current) => acc + (current.launch_year === label ? 1 : 0),
 //     0,
