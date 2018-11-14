@@ -41,5 +41,9 @@ export const getAllCores = state => _.flatten(getAllLaunches(state)
   .map(launch => [...launch.rocket.first_stage.cores
     .map(core => ({ ...core, launch_year: launch.launch_year }))]));
 
+export const getAllPayloads = state => _.flatten(getAllLaunches(state)
+  .map(launch => [...launch.rocket.second_stage.payloads
+    .map(payload => ({ ...payload, launch_year: launch.launch_year }))]));
+
 // export const getAllCores = state => _.flatten(state.allIds
 //  .map(id => [...getLaunch(state, id).rocket.cores]));

@@ -75,6 +75,14 @@ class SimpleMenu extends React.Component {
           >
             Cores Land Type
           </MenuItem>
+          <MenuItem
+            onClick={() => {
+              this.handleClose();
+              updateSelection('payload_weight_vs_year');
+            }}
+          >
+            Payload Weight vs Year
+          </MenuItem>
         </Menu>
       </div>
     );
