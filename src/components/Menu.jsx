@@ -67,6 +67,14 @@ class SimpleMenu extends React.Component {
           >
             Successful Core Landings
           </MenuItem>
+          <MenuItem
+            onClick={() => {
+              this.handleClose();
+              updateSelection('cores_land_type');
+            }}
+          >
+            Cores Land Type
+          </MenuItem>
         </Menu>
       </div>
     );

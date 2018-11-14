@@ -17,14 +17,15 @@ const mapStateToProps = (state) => {
 
   const data = map[state.selection].sourceFn(state);
   const labels = labelsFn(data);
-  
   const dataSets = map[state.selection].data.map(arg => ({
     label: arg.label,
     color: arg.color,
     data: dataSet(arg.predicate, data),
   }));
 
-  return { labels, dataSets };
+  const Chart = map[state.selection].chart({ labels, dataSets });
+
+  return { Chart };
 };
 
 export default connect(

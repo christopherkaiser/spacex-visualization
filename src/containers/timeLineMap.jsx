@@ -1,7 +1,14 @@
+import React from 'react';
 import { getAllLaunches, getAllCores } from '../reducers/launches';
+import BarChart from './BarChart';
+
+const barChart = props => () => (
+  <BarChart {...props} />
+);
 
 const map = {
   success: {
+    chart: barChart,
     sourceFn: state => getAllLaunches(state.launches),
     data: [
       {
@@ -22,6 +29,7 @@ const map = {
     ],
   },
   rocket: {
+    chart: barChart,
     sourceFn: state => getAllLaunches(state.launches),
     data: [
       {
@@ -47,6 +55,7 @@ const map = {
     ],
   },
   launch_site: {
+    chart: barChart,
     sourceFn: state => getAllLaunches(state.launches),
     data: [
       {
@@ -77,6 +86,7 @@ const map = {
     ],
   },
   cores_land_success: {
+    chart: barChart,
     sourceFn: state => getAllCores(state.launches),
     data: [
       {
@@ -90,9 +100,40 @@ const map = {
         predicate: core => core.land_success === false,
       },
       {
+        label: 'Landing Attempt Prevented ',
+        color: 'yellow',
+        predicate: core => core.land_success === null && core.landing_intent === true,
+      },
+      {
         label: 'Landing Not Attempted',
         color: 'gray',
-        predicate: core => core.land_success !== true && core.land_success !== false,
+        predicate: core => !core.landing_intent,
+      },
+    ],
+  },
+  cores_land_type: {
+    chart: barChart,
+    sourceFn: state => getAllCores(state.launches),
+    data: [
+      {
+        label: 'Drone Ship',
+        color: 'red',
+        predicate: core => core.landing_type === 'ASDS',
+      },
+      {
+        label: 'Return to Landing Site',
+        color: 'green',
+        predicate: core => core.landing_type === 'RTLS',
+      },
+      {
+        label: 'Ocean',
+        color: 'blue',
+        predicate: core => core.landing_type === 'Ocean',
+      },
+      {
+        label: 'Landing Not Attempted',
+        color: 'gray',
+        predicate: core => !core.landing_type,
       },
     ],
   },
