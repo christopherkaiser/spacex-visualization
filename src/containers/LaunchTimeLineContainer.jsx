@@ -16,7 +16,7 @@ export const barGraphToProps = (selection, data) => {
   const dataSet = (pred, set) => labelsFn(set).map(l => byLabel(set)[l].reduce(redu(pred), 0));
 
   const labels = labelsFn(data);
-  const dataSets = selection.data.map(arg => ({
+  const dataSets = selection.data(data).map(arg => ({
     label: arg.label,
     color: arg.color,
     data: dataSet(arg.predicate, data),
@@ -31,20 +31,19 @@ export const barGraphToProps = (selection, data) => {
 // draw average line
 
 export const scatterPlotToProps = (selection, data) => {
-  const dataSets = selection.data.map(arg => ({
+  const dataSets = selection.data(data).map(arg => ({
     label: arg.label,
     color: arg.color,
     data: data
-      .map(payload => ({ x: parseInt(payload.launch_year, 10), y: payload.payload_mass_kg }))
-      .filter(point => point.y),
+      .filter(payload => arg.predicate(payload))
+      .map(payload => ({ x: selection.xFunc(payload), y: selection.yFunc(payload) })),
   }));
   const Chart = selection.chart({ dataSets });
   return { Chart };
 };
 
-const mapStateToProps = (state) => {
-  return map[state.selection].stateToProps(state);
-};
+const mapStateToProps = state => map[state.selection].stateToProps(state);
+
 
 export default connect(
   mapStateToProps,
@@ -65,4 +64,8 @@ export default connect(
 // land success
 // payload_id
 
-//month vs launch site
+// payload customers
+
+// month vs launch site
+
+// bar graphs x axis nation y axis amount of payloads 

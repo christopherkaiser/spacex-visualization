@@ -16,3 +16,20 @@ export const green = rgb(0, 128, 0);
 export const purple = rgb(128, 0, 128);
 export const teal = rgb(0, 128, 128);
 export const navy = rgb(0, 0, 128);
+
+export const colorSet1 = [
+  red,
+  lime,
+  blue,
+  green,
+  //yellow,
+  aqua,
+  magenta,
+  silver,
+  gray,
+  maroon,
+  olive,
+  purple,
+  teal,
+  navy,
+];

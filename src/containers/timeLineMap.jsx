@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { getAllLaunches, getAllCores, getAllPayloads } from '../reducers/launches';
 import BarChart from './BarChart';
 import * as colors from '../constants/Colors';
@@ -13,13 +14,25 @@ const scatterPlot = props => () => (
   <ScatterPlot {...props} />
 );
 
-// extract colors into seperate file
+const generateData = (set, field) => {
+  const uniqueFields = _.uniq(set.map(field)).filter(f => f);
+  let iter = 0;
+  return uniqueFields.map((f) => {
+    const returnObj = {
+      label: f || 'Null',
+      color: colors.colorSet1[iter % 13],
+      predicate: value => field(value) === f,
+    };
+    iter += 1;
+    return returnObj;
+  });
+};
 
 const map = {
   success: {
     chart: barChart,
     stateToProps: state => barGraphToProps(map[state.selection], getAllLaunches(state.launches)),
-    data: [
+    data: () => [
       {
         label: 'Success',
         color: colors.lime,
@@ -40,7 +53,7 @@ const map = {
   rocket: {
     chart: barChart,
     stateToProps: state => barGraphToProps(map[state.selection], getAllLaunches(state.launches)),
-    data: [
+    data: () => [
       {
         label: 'falcon1',
         color: colors.maroon,
@@ -66,7 +79,7 @@ const map = {
   launch_site: {
     chart: barChart,
     stateToProps: state => barGraphToProps(map[state.selection], getAllLaunches(state.launches)),
-    data: [
+    data: () => [
       {
         label: 'Omelek Island',
         color: colors.green,
@@ -97,7 +110,7 @@ const map = {
   cores_land_success: {
     chart: barChart,
     stateToProps: state => barGraphToProps(map[state.selection], getAllCores(state.launches)),
-    data: [
+    data: () => [
       {
         label: 'Core Successful Landing',
         color: colors.lime,
@@ -123,7 +136,7 @@ const map = {
   cores_land_type: {
     chart: barChart,
     stateToProps: state => barGraphToProps(map[state.selection], getAllCores(state.launches)),
-    data: [
+    data: () => [
       {
         label: 'Drone Ship',
         color: colors.maroon,
@@ -146,21 +159,28 @@ const map = {
       },
     ],
   },
+  payload_types: {
+    chart: barChart,
+    stateToProps: state => barGraphToProps(map[state.selection], getAllPayloads(state.launches)),
+    data: payloads => generateData(payloads, payload => payload.nationality),
+  },
   payload_weight_vs_year: {
     chart: scatterPlot,
     stateToProps: state => scatterPlotToProps(map[state.selection], getAllPayloads(state.launches)),
-    data: [
-      {
-        label: 'Weight',
-        color: colors.maroon,
-        predicate: payload => payload.payload_mass_kg,
-      },
-    ],
+    xFunc: payload => payload.launch_date_utc,
+    yFunc: payload => payload.payload_mass_kg,
+    data: payloads => generateData(payloads.filter(p => p.launch_date_utc), payload => payload.payload_type),
   },
 };
 
 // launch.rocket.rocket_id, launch.launch_site.site_id
 // todo take color out and have colorsets that include the other params like transparancy
 // red: backgroundColor: rgb(red), borderColor: rgb(transparentRed)),
+
+// {
+//   label: 'Weight',
+//   color: colors.maroon,
+//   predicate: payload => payload.payload_mass_kg && payload.payload_type === 'Satellite',
+// },
 
 export default map;

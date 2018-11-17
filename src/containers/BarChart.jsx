@@ -55,4 +55,3 @@ BarChart.propTypes = {
 };
 
 export default BarChart;
-

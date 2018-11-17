@@ -78,6 +78,14 @@ class SimpleMenu extends React.Component {
           <MenuItem
             onClick={() => {
               this.handleClose();
+              updateSelection('payload_types');
+            }}
+          >
+            Payload Types
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              this.handleClose();
               updateSelection('payload_weight_vs_year');
             }}
           >
