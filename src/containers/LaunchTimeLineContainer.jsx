@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import React from 'react';
-import map from './timeLineMap';
+import timeLineMap from './timeLineMap';
 
 export const barGraphToProps = (selection, data) => {
-  const labelsFn = set => _.uniq(set.map(l => l.launch_year));
+  const labelsFn = set => _.uniq(set.map(l => selection.labelFn(l)));
   const byLabel = set => set.reduce(
     (acc, current) => ({
       ...acc,
-      [current.launch_year]: [...(acc[current.launch_year] || []), current],
+      [selection.labelFn(current)]: [...(acc[selection.labelFn(current)] || []), current],
     }),
     {},
   );
@@ -42,7 +42,7 @@ export const scatterPlotToProps = (selection, data) => {
   return { Chart };
 };
 
-const mapStateToProps = state => map[state.selection].stateToProps(state);
+const mapStateToProps = state => timeLineMap[state.selection].stateToProps(state);
 
 
 export default connect(
@@ -53,19 +53,9 @@ export default connect(
 ));
 
 // timescale year/month
-// bar spliting
-
-// rocket id
-// launch success
-// launch location
-
-// multiple cores
-// multiple payloads
-// land success
-// payload_id
 
 // payload customers
 
 // month vs launch site
 
-// bar graphs x axis nation y axis amount of payloads 
+// bar graphs x axis nation y axis amount of payloads

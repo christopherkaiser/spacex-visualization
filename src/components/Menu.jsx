@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { PropTypes } from 'prop-types';
+import timeLineMap from '../containers/timeLineMap';
 
 class SimpleMenu extends React.Component {
   state = {
@@ -27,7 +28,7 @@ class SimpleMenu extends React.Component {
           aria-haspopup="true"
           onClick={this.handleClick}
         >
-          Open Menu
+          <h3>Open Menu</h3>
         </Button>
         <Menu
           id="simple-menu"
@@ -35,62 +36,19 @@ class SimpleMenu extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <MenuItem
-            onClick={() => {
-              this.handleClose();
-              updateSelection('success');
-            }}
-          >
-            Success
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              this.handleClose();
-              updateSelection('rocket');
-            }}
-          >
-            Rocket
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              this.handleClose();
-              updateSelection('launch_site');
-            }}
-          >
-            Launch Site
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              this.handleClose();
-              updateSelection('cores_land_success');
-            }}
-          >
-            Successful Core Landings
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              this.handleClose();
-              updateSelection('cores_land_type');
-            }}
-          >
-            Cores Land Type
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              this.handleClose();
-              updateSelection('payload_types');
-            }}
-          >
-            Payload Types
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              this.handleClose();
-              updateSelection('payload_weight_vs_year');
-            }}
-          >
-            Payload Weight vs Year
-          </MenuItem>
+          {
+            Object.keys(timeLineMap).map(key => (
+              <MenuItem
+                key={key}
+                onClick={() => {
+                  this.handleClose();
+                  updateSelection(key);
+                }}
+              >
+                {timeLineMap[key].label}
+              </MenuItem>
+            ))
+          }
         </Menu>
       </div>
     );
@@ -102,3 +60,62 @@ SimpleMenu.propTypes = {
 };
 
 export default SimpleMenu;
+
+
+
+{/* <MenuItem
+onClick={() => {
+  this.handleClose();
+  updateSelection('rocket');
+}}
+>
+Rocket
+</MenuItem>
+<MenuItem
+onClick={() => {
+  this.handleClose();
+  updateSelection('launch_site');
+}}
+>
+Launch Site
+</MenuItem>
+<MenuItem
+onClick={() => {
+  this.handleClose();
+  updateSelection('cores_land_success');
+}}
+>
+Successful Core Landings
+</MenuItem>
+<MenuItem
+onClick={() => {
+  this.handleClose();
+  updateSelection('cores_land_type');
+}}
+>
+Cores Land Type
+</MenuItem>
+<MenuItem
+onClick={() => {
+  this.handleClose();
+  updateSelection('payload_nationality');
+}}
+>
+Payload Nationality
+</MenuItem>
+<MenuItem
+onClick={() => {
+  this.handleClose();
+  updateSelection('payload_nationality_time');
+}}
+>
+Payload Nationality Time
+</MenuItem>
+<MenuItem
+onClick={() => {
+  this.handleClose();
+  updateSelection('payload_weight_vs_year');
+}}
+>
+Payload Weight vs Year
+</MenuItem> */}

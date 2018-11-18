@@ -28,10 +28,12 @@ const generateData = (set, field) => {
   });
 };
 
-const map = {
+const timeLineMap = {
   success: {
     chart: barChart,
-    stateToProps: state => barGraphToProps(map[state.selection], getAllLaunches(state.launches)),
+    label: 'Success',
+    stateToProps: state => barGraphToProps(timeLineMap[state.selection], getAllLaunches(state.launches)),
+    labelFn: launch => launch.launch_year,
     data: () => [
       {
         label: 'Success',
@@ -52,7 +54,9 @@ const map = {
   },
   rocket: {
     chart: barChart,
-    stateToProps: state => barGraphToProps(map[state.selection], getAllLaunches(state.launches)),
+    label: 'Rocket',
+    stateToProps: state => barGraphToProps(timeLineMap[state.selection], getAllLaunches(state.launches)),
+    labelFn: launch => launch.launch_year,
     data: () => [
       {
         label: 'falcon1',
@@ -78,7 +82,9 @@ const map = {
   },
   launch_site: {
     chart: barChart,
-    stateToProps: state => barGraphToProps(map[state.selection], getAllLaunches(state.launches)),
+    label: 'Launch Site',
+    stateToProps: state => barGraphToProps(timeLineMap[state.selection], getAllLaunches(state.launches)),
+    labelFn: launch => launch.launch_year,
     data: () => [
       {
         label: 'Omelek Island',
@@ -109,7 +115,9 @@ const map = {
   },
   cores_land_success: {
     chart: barChart,
-    stateToProps: state => barGraphToProps(map[state.selection], getAllCores(state.launches)),
+    label: 'Successful Core Landings',
+    stateToProps: state => barGraphToProps(timeLineMap[state.selection], getAllCores(state.launches)),
+    labelFn: launch => launch.launch_year,
     data: () => [
       {
         label: 'Core Successful Landing',
@@ -135,7 +143,9 @@ const map = {
   },
   cores_land_type: {
     chart: barChart,
-    stateToProps: state => barGraphToProps(map[state.selection], getAllCores(state.launches)),
+    label: 'Cores Land Type',
+    stateToProps: state => barGraphToProps(timeLineMap[state.selection], getAllCores(state.launches)),
+    labelFn: launch => launch.launch_year,
     data: () => [
       {
         label: 'Drone Ship',
@@ -159,17 +169,37 @@ const map = {
       },
     ],
   },
-  payload_types: {
+  payload_nationality: {
     chart: barChart,
-    stateToProps: state => barGraphToProps(map[state.selection], getAllPayloads(state.launches)),
+    label: 'Payload Nationality',
+    stateToProps: state => barGraphToProps(
+      timeLineMap[state.selection],
+      getAllPayloads(state.launches),
+    ),
+    labelFn: payload => payload.nationality,
+    data: payloads => generateData(payloads, payload => payload.nationality),
+  },
+  payload_nationality_time: {
+    chart: barChart,
+    label: 'Payload Nationality Time',
+    stateToProps: state => barGraphToProps(
+      timeLineMap[state.selection],
+      getAllPayloads(state.launches),
+    ),
+    labelFn: launch => launch.launch_year,
     data: payloads => generateData(payloads, payload => payload.nationality),
   },
   payload_weight_vs_year: {
     chart: scatterPlot,
-    stateToProps: state => scatterPlotToProps(map[state.selection], getAllPayloads(state.launches)),
+    label: 'Payload Weight vs Year',
+    stateToProps: state => scatterPlotToProps(
+      timeLineMap[state.selection],
+      getAllPayloads(state.launches),
+    ),
     xFunc: payload => payload.launch_date_utc,
     yFunc: payload => payload.payload_mass_kg,
-    data: payloads => generateData(payloads.filter(p => p.launch_date_utc), payload => payload.payload_type),
+    data: payloads => generateData(payloads
+      .filter(p => p.launch_date_utc), payload => payload.payload_type),
   },
 };
 
@@ -183,4 +213,4 @@ const map = {
 //   predicate: payload => payload.payload_mass_kg && payload.payload_type === 'Satellite',
 // },
 
-export default map;
+export default timeLineMap;
